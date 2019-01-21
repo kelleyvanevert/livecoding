@@ -2,24 +2,85 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import Item from './Item.js';
+
 class App extends Component {
+
+  state = {
+    name: "Kelley",
+    newItemText: "Kell",
+    list: [
+      "Bananas",
+      "Milk",
+      "Jeans",
+      "Cheese",
+      "Sneakers",
+      "Milk",
+    ],
+  };
+
+  handleChange = (event) => {
+    this.setState({
+      newItemText: event.target.value,
+    });
+
+    //console.log(this.state.new)
+  }
+
+
+  addItem = () => {
+
+    this.setState({
+      list: [
+        ...this.state.list,
+        this.state.newItemText,
+      ],
+      newItemText: '',
+    });
+
+  }
+
+  
+  removeItem = (i) => {
+
+    console.log("remove item")
+    
+    let newList = [...this.state.list];
+    newList.splice(i, 1);
+
+    this.setState({
+      list: newList,
+    });
+
+    // what item to remove??
+    // this.setState
+  }
+
   render() {
+
+    let funkyName = this.state.name
+      .split('')
+      .map(letter => letter.toUpperCase())
+      .join(' ');
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <h1>{funkyName}'s shopping cart</h1>
+        <p>Number of items: {this.state.list.length}</p>
+        <ul>
+          {this.state.list.map((item, i) =>
+          <li>
+            <Item hello={item}
+                  remove={() => this.removeItem(i)}>
+            </Item>
+          </li>
+          )}
+          <li>
+            <input value={this.state.newItemText} onChange={this.handleChange} />
+            <button onClick={this.addItem}>Add</button><br />
+            You may add: {this.state.newItemText}
+          </li>
+        </ul>
       </div>
     );
   }
