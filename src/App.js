@@ -13,6 +13,7 @@ class App extends Component {
       { name: "Mimi" },
       { name: "Rein" },
       { name: "Milan" },
+      { name: "Ally" },
     ],
     selectedTeachers: [
     ],
